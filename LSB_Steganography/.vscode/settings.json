@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "preprocessingactions.h": "c",
+        "common.h": "c",
+        "types.h": "c",
+        "decode.h": "c"
+    }
+}
