@@ -1,0 +1,15 @@
+# Ignore build artifacts
+*.o
+*.out
+*.exe
+
+# Ignore editor/OS junk
+*.swp
+*.log
+.DS_Store
+
+# Ignore compiled binaries
+a.out
+
+# Ignore folders (if any)
+build/
