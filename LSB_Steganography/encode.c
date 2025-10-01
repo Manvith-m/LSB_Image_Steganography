@@ -150,7 +150,6 @@ Status encode_secret_file_size(long file_size, EncodeInfo *encInfo)
 {
     if(encode_num_to_lsb(file_size,encInfo)==e_success)
     {
-        printf("debug : %ld\n",encInfo->size_secret_file);
         printf("INFO : Secret file extension size encoded successfully..\n");
     }
     return e_success;
@@ -179,10 +178,12 @@ Status encode_data_to_image(const char *data, int size, EncodeInfo *encInfo)
 { 
     for(int i = 0;i<size;i++)
     {
+        printf("INFO ::: ENCODING DATA ::: %d ::: \r",i++);
         fread(encInfo->image_data,8,1,encInfo->fptr_src_image);
         encode_byte_to_lsb(data[i], encInfo->image_data);
         fwrite(encInfo->image_data,8,1,encInfo->fptr_stego_image);
     }
+    printf("\n");
     return e_success;
 }
 /*
@@ -190,10 +191,13 @@ Status encode_data_to_image(const char *data, int size, EncodeInfo *encInfo)
 Status copy_remaining_img_data(FILE *fptr_src, FILE *fptr_dest)
 {
     char ch;
+    int i = 0;
     while(fread(&ch,1,1,fptr_src)>0)
     {
+        printf("INFO ::: COPYING IMAGE DATA ::: %d ::: \r",i++);
         fwrite(&ch,1,1,fptr_dest);
     }
+    printf("\n");
     return e_success;
 }
 /* Encode a character into 8 bytes of the bmp image
@@ -220,8 +224,10 @@ Status encode_num_to_lsb(int size, EncodeInfo *encInfo)
     fread(num_buffer,sizeof(int)*8,1,encInfo->fptr_src_image);
     for(int i = 0;i<sizeof(int)*8;i++)
     {
+        printf("INFO ::: ENCODING SIZE ::: %d ::: \r",i++);
         num_buffer[i] = (num_buffer[i] & 0xFE) | ((size>>i)&1);
     }
+    printf("\n");
     fwrite(num_buffer,sizeof(int)*8,1,encInfo->fptr_stego_image);
     return e_success;
 }

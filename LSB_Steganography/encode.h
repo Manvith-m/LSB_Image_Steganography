@@ -2,7 +2,7 @@
 #define ENCODE_H
 #include <stdio.h>
 #include "types.h" // Contains user defined types
-
+#include "common.h"
 /* 
  * Structure to store information required for
  * encoding secret file to source Image
@@ -10,9 +10,9 @@
  * also stored
  */
 
-#define MAX_SECRET_BUF_SIZE 1
+
 #define MAX_IMAGE_BUF_SIZE (MAX_SECRET_BUF_SIZE * 8)
-#define MAX_FILE_SUFFIX 4
+
 
 typedef struct _EncodeInfo
 {
@@ -71,8 +71,10 @@ Status encode_data_to_image(const char *data, int size, EncodeInfo *encInfo);
 
 /* Encode a byte into LSB of image data array */
 Status encode_byte_to_lsb(char data, char *image_buffer);
+
 /* Encode a num into LSB of image data array */
 Status encode_num_to_lsb(int size, EncodeInfo *encInfo);
+
 /* Copy remaining image bytes from src to stego image after encoding */
 Status copy_remaining_img_data(FILE *fptr_src, FILE *fptr_dest);
 
