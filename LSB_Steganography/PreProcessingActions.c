@@ -4,11 +4,6 @@
 #include "types.h"
 #include "common.h"
 
-/* Operations on the Arguments received in the command line
- * Takes in pointers to decode and encode info and argc and argv
- * gives e_success if the Command line Arguments meet the expection
- * proceed to decode on encode on successful return
-*/
 Status CLI_Operations(EncodeInfo *encInfo,DecodeInfo *decInfo, int *OperationPtr, int argc, char *argv[])
 {   
     if(argc <= 2)
@@ -59,10 +54,7 @@ Status CLI_Operations(EncodeInfo *encInfo,DecodeInfo *decInfo, int *OperationPtr
      }
 
 }
-/*
-* If user selects encode operation then validate the command line arguments accordingly
-*  Encoding : -e file_to_encode.bmp secret_data.txt [outputfile.txt]
-*/
+
 Status read_and_validate_encode_args(int argc, char *argv[], EncodeInfo *encInfo,int* OperationPtr)
 {
     if(argc < 4 || argc > 5)
@@ -94,10 +86,7 @@ Status read_and_validate_encode_args(int argc, char *argv[], EncodeInfo *encInfo
         return e_success;
     }
 }
-/*
-* If user selects decode operation then validate the command line arguments accordingly
-* Decoding : -d file_to_decode.bmp [outputfile.txt]
-*/
+/* Read and validate decode args from argv */
 Status read_and_validate_decode_args(int argc, char *argv[], DecodeInfo *decInfo,int* OperationPtr)
 {
     if(argc < 3 || argc > 4)

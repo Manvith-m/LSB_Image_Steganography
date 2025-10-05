@@ -53,7 +53,7 @@ Status check_capacity(EncodeInfo *encInfo)
 {
     encInfo->image_capacity = get_image_size_for_bmp(encInfo->fptr_src_image);
     encInfo->size_secret_file = get_file_size(encInfo->fptr_secret);
-    if(encInfo->image_capacity > (16+32+32+32+32)+(encInfo->size_secret_file*8))
+    if(encInfo->image_capacity > (strlen(MAGIC_STRING)+32+32+32+32)+(encInfo->size_secret_file*8))
     {
         printf("INFO : Image capacity is sufficient..\n");
         return e_success;
@@ -150,6 +150,7 @@ Status encode_secret_file_size(long file_size, EncodeInfo *encInfo)
 {
     if(encode_num_to_lsb(file_size,encInfo)==e_success)
     {
+        printf("debug : %ld\n",encInfo->size_secret_file);
         printf("INFO : Secret file extension size encoded successfully..\n");
     }
     return e_success;
@@ -178,7 +179,7 @@ Status encode_data_to_image(const char *data, int size, EncodeInfo *encInfo)
 { 
     for(int i = 0;i<size;i++)
     {
-        printf("INFO ::: ENCODING DATA ::: %d ::: \r",i++);
+        printf("INFO ::: ENCODING DATA ::: %d ::: \r",i);
         fread(encInfo->image_data,8,1,encInfo->fptr_src_image);
         encode_byte_to_lsb(data[i], encInfo->image_data);
         fwrite(encInfo->image_data,8,1,encInfo->fptr_stego_image);
@@ -224,7 +225,7 @@ Status encode_num_to_lsb(int size, EncodeInfo *encInfo)
     fread(num_buffer,sizeof(int)*8,1,encInfo->fptr_src_image);
     for(int i = 0;i<sizeof(int)*8;i++)
     {
-        printf("INFO ::: ENCODING SIZE ::: %d ::: \r",i++);
+        printf("INFO ::: ENCODING SIZE ::: %d ::: \r",i);
         num_buffer[i] = (num_buffer[i] & 0xFE) | ((size>>i)&1);
     }
     printf("\n");
